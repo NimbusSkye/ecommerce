@@ -1,0 +1,12 @@
+{% if item_list %}
+<ul>
+    {% for item in item_list %}
+        <li>Name: {{ item.name }}</li>
+		<li>Description: {{ item.desc }}</li>
+		<li>Price: ${{ item.cost }}</li>
+		<li><img src={{ item.pic }} width=100% height=100%></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>Nothing</p>
+{% endif %}
