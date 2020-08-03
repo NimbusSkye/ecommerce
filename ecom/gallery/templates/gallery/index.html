@@ -1,14 +1,17 @@
-{% load static %}
+<title>Buy shit here</title>
+<h1 align="center">Buy shit here</h1>
+<a href={% url 'gallery:upload' %}>Sell an Item</a>
 <body bgcolor="green">
+{% load static %}
 {% if item_list %}
+{% for item in item_list %}
 <ul>
-    {% for item in item_list %}
-        <li>Name: {{ item.name }}</li>
-		<li>Description: {{ item.desc }}</li>
-		<li>Price: ${{ item.cost }}</li>
-		<img src={% static item.pic %} height=70% width=70%>
-    {% endfor %}
+	<img src={{ item.pic.url }} height="200" width="250">
+    <li>Name: {{ item.name }}</li>
+	<li>Description: {{ item.desc }}</li>
+	<li>Price: ${{ item.cost }}</li>
 </ul>
+{% endfor %}
 {% else %}
 <p>No Items</p>
 {% endif %}
