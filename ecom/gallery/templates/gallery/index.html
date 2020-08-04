@@ -1,12 +1,22 @@
 <title>Buy shit here</title>
-<h1 align="center">Buy shit here</h1>
-<a href={% url 'gallery:upload' %}>Sell an Item</a>
-<body bgcolor="green">
+<style>
+.text {
+	color:white
+}
+</style>
+<div class="text">
+<center>
+<h1>Buy shit here
+<br />
+<a href={% url 'gallery:upload' %}>Sell an Item</a><br />
+<a href={% url 'register' %}>Register</a></h1>
+</center>
+<body bgcolor="black">
 {% load static %}
 {% if item_list %}
 {% for item in item_list %}
 <ul>
-	<img src={{ item.pic.url }} height="200" width="250">
+	<img src={{ item.pic.url }} height="200" width="300">
     <li>Name: {{ item.name }}</li>
 	<li>Description: {{ item.desc }}</li>
 	<li>Price: ${{ item.cost }}</li>
@@ -15,4 +25,5 @@
 {% else %}
 <p>No Items</p>
 {% endif %}
+</div>
 </body>
