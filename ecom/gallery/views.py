@@ -17,7 +17,5 @@ def upload(request):
             item = Item(name=form.cleaned_data['name'], desc=form.cleaned_data['desc'], cost=form.cleaned_data['price'], pic=request.FILES['pic'])
             item.save()
             return HttpResponseRedirect('/gallery/')
-        else:
-            return render(request, 'gallery/errors.html', {'form': form})
     form = ItemForm()
     return render(request, 'gallery/upload.html', {'form': form})

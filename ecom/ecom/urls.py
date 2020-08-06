@@ -23,6 +23,7 @@ urlpatterns = [
     path('gallery/', include('gallery.urls')),
     path('admin/', admin.site.urls),
     path('register/', v.register, name='register'),
+    path('', include("django.contrib.auth.urls")),
 ]
 
 if settings.DEBUG:

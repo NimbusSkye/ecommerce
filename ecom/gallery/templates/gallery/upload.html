@@ -1,12 +1,17 @@
-<form method='POST' action={% url 'gallery:upload' %} enctype="multipart/form-data"> 
+
+{% if not user.is_authenticated %}
+<h1>You must sign in to sell items</h1>
+<p>Please sign in <a href={% url 'login' %}>here</a>.</p>
+
+{% else %}
+
+{% block content %}
+{% block title %}Sell an Item{% endblock %}
+{% load crispy_forms_tags %}
+<form method='POST' enctype="multipart/form-data"> 
 	{% csrf_token %}
-    {% for field in form %}
-    <div class="fieldWrapper">
-        {{ field.errors }}
-        {{ field.label_tag }} 
-		<br/>
-        {{ field }}
-    </div>
-    {% endfor %}
-    <input type="submit" value="Submit">
+	{{ form|crispy }}
+	<button type="submit" class="btn btn-success">List Item</button>
 </form>
+{% endblock %}
+{% endif %}
