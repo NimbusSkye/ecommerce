@@ -1,18 +1,22 @@
+<!DOCTYPE html>
+<html>
 <title>Buy shit here</title>
 <style>
 .text {
 	color:white
 }
 </style>
+<body bgcolor="black">
 <div class="text">
 <center>
+{% if not user.is_authenticated %}
+<h1>Please sign in <a href={% url 'login' %}>here</a> to view the gallery.</h1>
+{% else %}
 <h1>Buy shit here
 <br />
 <a href={% url 'gallery:upload' %}>Sell an Item</a><br />
-<a href={% url 'register' %}>Register</a></h1>
+<a href={% url 'logout' %}>Sign out</a></h1>
 </center>
-<body bgcolor="black">
-{% load static %}
 {% if item_list %}
 {% for item in item_list %}
 <ul>
@@ -27,3 +31,5 @@
 {% endif %}
 </div>
 </body>
+</html>
+{% endif %}
