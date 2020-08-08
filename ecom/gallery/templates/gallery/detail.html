@@ -1,0 +1,14 @@
+{% extends 'gallery/base.html' %}
+{% block title %}
+Viewing {{ item.name }}
+{% endblock %}
+
+{% block content %}
+<ul>
+<img src={{ item.pic.url }}>
+<li>{{ item.name }}</li>
+<li>{{ item.desc }}</li>
+<li>${{ item.cost }}</li>
+<br>
+<a href={% url 'gallery:index' %}>Back to Gallery</a>
+{% endblock %}

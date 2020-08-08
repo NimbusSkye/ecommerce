@@ -19,7 +19,7 @@ Buy shit here
 {% for item in item_list %}
 <ul>
 	<img src={{ item.pic.url }} height="200" width="300">
-    <li>Name: {{ item.name }}</li>
+    <li>Name: <a href={{ item.id }}>{{ item.name }}</a></li>
 	<li>Description: {{ item.desc }}</li>
 	<li>Price: ${{ item.cost }}</li>
 </ul>

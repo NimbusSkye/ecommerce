@@ -19,3 +19,8 @@ def upload(request):
             return HttpResponseRedirect('/gallery/')
     form = ItemForm()
     return render(request, 'gallery/upload.html', {'form': form})
+    
+def detail (request, id):
+    item = Item.objects.get(id=id)
+    return render(request, 'gallery/detail.html', {'item': item})
+    
