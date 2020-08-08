@@ -1,17 +1,29 @@
-
+<!DOCTYPE html>
+<style>
+.text {
+	color:white
+}
+</style>
+<body bgcolor="black">
 {% if not user.is_authenticated %}
+<title>Forbidden</title>
+<div class="text">
 <h1>You must sign in to sell items</h1>
 <p>Please sign in <a href={% url 'login' %}>here</a>.</p>
+</div>
+</body>
 
 {% else %}
 
-{% block content %}
-{% block title %}Sell an Item{% endblock %}
+<div class="text">
+<h1>Sell an Item</h1>
 {% load crispy_forms_tags %}
 <form method='POST' enctype="multipart/form-data"> 
 	{% csrf_token %}
 	{{ form|crispy }}
 	<button type="submit" class="btn btn-success">List Item</button>
 </form>
-{% endblock %}
+</div>
+</body>
+
 {% endif %}
