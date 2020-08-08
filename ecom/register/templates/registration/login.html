@@ -1,3 +1,5 @@
+{% extends 'gallery/base.html' %}
+
 {% block title %}
 Login Here
 {% endblock %}
@@ -11,4 +13,6 @@ Login Here
 	<p>Don't have an accoount? Create one <a href="/register">here</a>.</p>
 	<button type="submit" class="btn btn-success">Login</button>	
     </form>
+	<br>
+	<a href={% url 'gallery:index' %}>Go back home</a>
 {% endblock %}
