@@ -1,0 +1,12 @@
+{% extends 'gallery/base.html' %}
+
+{% block title %}Shopping Cart{% endblock %}
+
+{% block content %}
+{% for item in cart %}
+<ul>
+<img src={% item.pic.url %}>
+<li>{{ item.name }}</li>
+<li>{{ item.desc }}</li>
+<li>${{ item.cost }}</li>
+</ul>

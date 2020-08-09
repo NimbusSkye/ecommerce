@@ -4,11 +4,6 @@ Buy shit here
 {% endblock %}
 
 {% block content %}
-{% if not user.is_authenticated %}
-<center>
-<h1>Please sign in <a href={% url 'login' %}>here</a> to view the gallery.</h1>
-</center>
-{% else %}
 <center>
 <h1>Buy shit here
 <br />
@@ -18,7 +13,7 @@ Buy shit here
 {% if item_list %}
 {% for item in item_list %}
 <ul>
-	<img src={{ item.pic.url }} height="200" width="300">
+	<li><img src={{ item.pic.url }} height="200" width="300"></li>
     <li>Name: <a href={{ item.id }}>{{ item.name }}</a></li>
 	<li>Description: {{ item.desc }}</li>
 	<li>Price: ${{ item.cost }}</li>
@@ -26,6 +21,5 @@ Buy shit here
 {% endfor %}
 {% else %}
 <p>No Items</p>
-{% endif %}
 {% endif %}
 {% endblock %}

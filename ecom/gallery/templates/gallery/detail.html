@@ -4,11 +4,15 @@ Viewing {{ item.name }}
 {% endblock %}
 
 {% block content %}
+{% if item %}
 <ul>
 <img src={{ item.pic.url }}>
 <li>{{ item.name }}</li>
 <li>{{ item.desc }}</li>
 <li>${{ item.cost }}</li>
 <br>
+{% else %}
+<h1>Error: Nonexistent item</h1>
+{% endif %}
 <a href={% url 'gallery:index' %}>Back to Gallery</a>
 {% endblock %}
