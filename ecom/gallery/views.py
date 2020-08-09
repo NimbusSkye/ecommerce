@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from gallery.models import Item
 from gallery.forms import ItemForm
 
@@ -21,6 +21,9 @@ def upload(request):
     return render(request, 'gallery/upload.html', {'form': form})
     
 def detail (request, id):
-    item = Item.objects.get(id=id)
+    try:
+        item = Item.objects.get(id=id)
+    except Item.DoesNotExist:
+        item = None
     return render(request, 'gallery/detail.html', {'item': item})
     

@@ -9,4 +9,4 @@ class Item (models.Model):
     pic=models.ImageField(upload_to='%Y/%m/%d')
     
     def __str__ (self):
-        return self.name
+        return f'{self.name}, {self.id}'

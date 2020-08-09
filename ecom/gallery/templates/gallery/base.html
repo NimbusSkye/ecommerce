@@ -1,18 +1,25 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<style>
+<style>
 .text {
 	color:white
 }
 </style>
-    <title>{% block title %}Yufeng's Site{% endblock %}</title>
+<title>{% block title %}Forbidden{% endblock %}</title>
 </head>
 <body bgcolor="black">
+{% if user.is_authenticated %}
     <div class="text">
 	{% block content %}
 	{% endblock %}
     </div>
+	
+{% else %}
+<div class="text">
+<h1>You must <a href={% url 'login' %}>sign in</a> to perform this operation.</h1>
+</div>
+{% endif %}
 
 </body>
 </html>

@@ -1,12 +1,15 @@
-{% extends 'gallery/base.html' %}
-
-{% block title %}
-Login Here
-{% endblock %}
+<!DOCTYPE html>
+<html>
+<title>Login</title>
+<body bgcolor="black">
+<style>
+.text { color:white }
+</style>
+<div class="text">
+<h1>Login here</h1>
 
 {% load crispy_forms_tags %}
 
-{% block content %}
      <form method="post" class="from-group">
 	{% csrf_token %}
 	{{form|crispy}}
@@ -15,4 +18,6 @@ Login Here
     </form>
 	<br>
 	<a href={% url 'gallery:index' %}>Go back home</a>
-{% endblock %}
+	</div>
+	</body>
+	</html>

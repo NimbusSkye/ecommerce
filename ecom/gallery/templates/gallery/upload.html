@@ -1,22 +1,7 @@
-<!DOCTYPE html>
-<style>
-.text {
-	color:white
-}
-</style>
-<body bgcolor="black">
-{% if not user.is_authenticated %}
-<title>Forbidden</title>
-<div class="text">
-<h1>You must sign in to sell items</h1>
-<p>Please sign in <a href={% url 'login' %}>here</a>.</p>
-</div>
-</body>
+{% extends 'gallery/base.html' %}
+{% block title %}Sell an Item{% endblock %}
 
-{% else %}
-
-<div class="text">
-<h1>Sell an Item</h1>
+{% block content %}
 {% load crispy_forms_tags %}
 <form method='POST' enctype="multipart/form-data"> 
 	{% csrf_token %}
@@ -25,7 +10,4 @@
 </form>
 <br>
 <a href={% url 'gallery:index' %}>Back to home</a>
-</div>
-</body>
-
-{% endif %}
+{% endblock %}
