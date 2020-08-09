@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from gallery.models import Item
+from gallery.models import Item, Cart
 from gallery.forms import ItemForm
 
 # Create your views here.
@@ -27,3 +27,16 @@ def detail (request, id):
         item = None
     return render(request, 'gallery/detail.html', {'item': item})
     
+def create_cart (request):
+    if request.user.is_authenticated:
+        cart = request.user.cart.all()[:1]
+        if not cart:
+            c = Cart()
+            c.save()
+            request.user.cart.add(c)
+    return HttpResponseRedirect('/gallery/')
+    
+def add_to_cart (request, id):
+    create_cart(request)
+    request.user.cart.all()[:1].get().addItem(Item.objects.get(id=id))
+    return HttpResponseRedirect('/gallery/')
