@@ -5,8 +5,11 @@
 {% block content %}
 {% for item in cart %}
 <ul>
-<img src={% item.pic.url %}>
+<img src={{ item.pic.url }} height="200" width="250">
 <li>{{ item.name }}</li>
 <li>{{ item.desc }}</li>
 <li>${{ item.cost }}</li>
 </ul>
+{% endfor %}
+<a href={% url 'gallery:index' %}>Back to Gallery </a>
+{% endblock %}

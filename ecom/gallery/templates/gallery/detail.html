@@ -11,6 +11,7 @@ Viewing {{ item.name }}
 <li>{{ item.desc }}</li>
 <li>${{ item.cost }}</li>
 <br>
+</ul>
 <a href={% url 'gallery:add_to_cart' item.id %}>Add to Cart</a>
 <br>
 {% else %}

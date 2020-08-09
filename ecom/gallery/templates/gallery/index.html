@@ -8,7 +8,8 @@ Buy shit here
 <h1>Buy shit here
 <br />
 <a href={% url 'gallery:upload' %}>Sell an Item</a><br />
-<a href={% url 'logout' %}>Sign out</a></h1>
+<a href={% url 'logout' %}>Sign out</a><br />
+<a href={% url 'gallery:view_cart' %}>Cart</a></h1>
 </center>
 {% if item_list %}
 {% for item in item_list %}
