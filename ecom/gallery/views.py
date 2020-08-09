@@ -26,17 +26,22 @@ def detail (request, id):
     except Item.DoesNotExist:
         item = None
     return render(request, 'gallery/detail.html', {'item': item})
-    
-def create_cart (request):
+
+def add_to_cart (request, id):
     if request.user.is_authenticated:
-        cart = request.user.cart.all()[:1]
-        if not cart:
+        c = Cart.objects.filter(user=request.user)
+        if not c:
             c = Cart()
             c.save()
             request.user.cart.add(c)
+        else:
+            c = c.get()
+        c.items.add(id)
     return HttpResponseRedirect('/gallery/')
     
-def add_to_cart (request, id):
-    create_cart(request)
-    request.user.cart.all()[:1].get().addItem(Item.objects.get(id=id))
-    return HttpResponseRedirect('/gallery/')
+def view_cart (request):
+    c = Cart.objects.filter(user=request.user)
+    if not c:
+        return HttpResponseRedirect('/gallery/')
+    items = c.get().items.all()
+    return render(request, 'gallery/cart.html', {'cart': items})
