@@ -24,6 +24,7 @@ class Cart (models.Model):
     def addItem (self, id):
         self.items.add(id)
         self.totalprice += Item.objects.get(id=id).cost
+        self.save()
     
     def removeItem (self, num):
         self.totalprice -= Item.objects.get(id=id).cost

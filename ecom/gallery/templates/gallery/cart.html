@@ -3,7 +3,8 @@
 {% block title %}Shopping Cart{% endblock %}
 
 {% block content %}
-{% for item in cart %}
+{% if items %}
+{% for item in items %}
 <ul>
 <img src={{ item.pic.url }} height="200" width="250">
 <li>{{ item.name }}</li>
@@ -11,5 +12,12 @@
 <li>${{ item.cost }}</li>
 </ul>
 {% endfor %}
+<a href={% url 'gallery:clear_cart' %}>Clear all Items</a>
+{% else %}
+<h1>No Items. Add some shit and come back.</h1>
+{% endif %}
+<h1>Total price: ${{ cart.totalprice }}</h1>
+<p>
 <a href={% url 'gallery:index' %}>Back to Gallery </a>
+</p>
 {% endblock %}

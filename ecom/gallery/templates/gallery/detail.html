@@ -5,17 +5,16 @@ Viewing {{ item.name }}
 
 {% block content %}
 {% if item %}
-<ul>
-<img src={{ item.pic.url }}>
-<li>{{ item.name }}</li>
-<li>{{ item.desc }}</li>
-<li>${{ item.cost }}</li>
+<h1>{{ item.name }}</h1>
+<img src={{ item.pic.url }} height="400" width="600">
+<p>{{ item.desc }}</p>
+<h2>Price: ${{ item.cost }}</h2>
 <br>
-</ul>
 <a href={% url 'gallery:add_to_cart' item.id %}>Add to Cart</a>
-<br>
 {% else %}
 <h1>Error: Nonexistent item</h1>
 {% endif %}
+<br>
+<br>
 <a href={% url 'gallery:index' %}>Back to Gallery</a>
 {% endblock %}
