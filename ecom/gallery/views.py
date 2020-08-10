@@ -36,12 +36,26 @@ def add_to_cart (request, id):
             request.user.cart.add(c)
         else:
             c = c.get()
-        c.items.add(id)
+        c.addItem(id)
     return HttpResponseRedirect('/gallery/')
     
 def view_cart (request):
-    c = Cart.objects.filter(user=request.user)
-    if not c:
-        return HttpResponseRedirect('/gallery/')
-    items = c.get().items.all()
-    return render(request, 'gallery/cart.html', {'cart': items})
+    if request.user.is_authenticated:
+        c = Cart.objects.filter(user=request.user)
+        if not c:
+            return HttpResponseRedirect('/gallery/')
+        cart = c.get()
+        items = cart.items.all()
+        return render(request, 'gallery/cart.html', {'cart': cart, 'items': items})
+    return HttpResponseRedirect('/gallery/')
+    
+def clear_cart (request):
+    if request.user.is_authenticated:
+        c = Cart.objects.filter(user=request.user)
+        if not c:
+            return HttpResponseRedirect('/gallery/')
+        cart = c.get()
+        cart.clear()
+        cart.totalprice=0
+        cart.save()
+    return HttpResponseRedirect('/gallery/')
