@@ -40,7 +40,7 @@ class Cart (models.Model):
         
     def __str__ (self):
         str=self.user.username
-        if self.items:
+        if self.items.all():
             str=''
             for item in self.items.all():
                 str = str + f'{item.name}, ${item.cost}; '
