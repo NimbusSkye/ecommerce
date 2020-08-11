@@ -18,22 +18,23 @@ class Cart (models.Model):
     totalprice = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="cart", null=True)
     
-    def getTotal (self):
-        return self.totalprice
-    
     def addItem (self, id):
         self.items.add(id)
         self.totalprice += Item.objects.get(id=id).cost
         self.save()
     
-    def removeItem (self, num):
-        self.totalprice -= Item.objects.get(id=id).cost
-        del self.items[num]
+    def removeItem (self, id):
+        item = Item.objects.get(id=id)
+        self.totalprice -= item.cost
+        self.save()
+        self.items.remove(item)
         
     def checkout (self):
         for item in self.items.all():
-            Item.objects.filter(id=item.id).delete()
+            item.delete()
         self.items.clear()
+        self.totalprice=0
+        self.save()
         
     def clear (self):
         self.items.clear()
