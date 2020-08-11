@@ -10,13 +10,15 @@
 <li>{{ item.name }}</li>
 <li>{{ item.desc }}</li>
 <li>${{ item.cost }}</li>
+<li><a href={% url 'gallery:remove_item' item.id %}>Remove Item</a></li>
 </ul>
 {% endfor %}
 <a href={% url 'gallery:clear_cart' %}>Clear all Items</a>
+<h2>Total price: ${{ cart.totalprice }}</h2>
+<h1><a href={% url 'gallery:checkout' %}>Checkout</a></h1>
 {% else %}
 <h1>No Items. Add some shit and come back.</h1>
 {% endif %}
-<h1>Total price: ${{ cart.totalprice }}</h1>
 <p>
 <a href={% url 'gallery:index' %}>Back to Gallery </a>
 </p>
