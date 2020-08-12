@@ -40,11 +40,13 @@ class Cart (models.Model):
         self.items.clear()
         
     def __str__ (self):
-        str=self.user.username
         if self.items.all():
             str=''
             for item in self.items.all():
                 str = str + f'{item.name}, ${item.cost}; '
             return str
         else:
-            return str + f"'s empty cart, id {self.id}"  
+            if self.user:
+                str=self.user.username
+                return str + f"'s empty cart, id {self.id}"  
+            return f"Deleted User's empty cart, id {self.id}"
