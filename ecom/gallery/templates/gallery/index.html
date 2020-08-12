@@ -10,6 +10,7 @@ Buy shit here
 <a href={% url 'gallery:upload' %}>Sell an Item</a><br />
 <a href={% url 'logout' %}>Sign out</a><br />
 <a href={% url 'gallery:view_cart' %}>Cart</a></h1>
+<h3>Signed in as {{ user.username }}</h3>
 </center>
 {% if item_list %}
 {% for item in item_list %}
