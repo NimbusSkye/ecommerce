@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from gallery.models import Item, Cart
 from gallery.forms import ItemForm
+from django.contrib.auth.models import User
 
 # Create your views here.
 
@@ -14,7 +15,7 @@ def upload(request):
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
         if form.is_valid():
-            item = Item(name=form.cleaned_data['name'], desc=form.cleaned_data['desc'], cost=form.cleaned_data['price'], pic=request.FILES['pic'])
+            item = Item(name=form.cleaned_data['name'], desc=form.cleaned_data['desc'], user=request.user.username, cost=form.cleaned_data['price'], pic=request.FILES['pic'])
             item.save()
             return HttpResponseRedirect('/gallery/')
     form = ItemForm()
