@@ -8,6 +8,7 @@ Viewing {{ item.name }}
 <h1>{{ item.name }}</h1>
 <img src={{ item.pic.url }} height="400" width="600">
 <p>{{ item.desc }}</p>
+<p>Seller: {{ item.user }}</p>
 <h2>Price: ${{ item.cost }}</h2>
 <br>
 <a href={% url 'gallery:add_to_cart' item.id %}>Add to Cart</a>

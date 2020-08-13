@@ -9,6 +9,7 @@
 <img src={{ item.pic.url }} height="200" width="250">
 <li>{{ item.name }}</li>
 <li>{{ item.desc }}</li>
+<li>Seller: {{ item.user }}</li>
 <li>${{ item.cost }}</li>
 <li><a href={% url 'gallery:remove_item' item.id %}>Remove Item</a></li>
 </ul>

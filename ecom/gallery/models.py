@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 class Item (models.Model):
     name=models.CharField(max_length=30)
     desc=models.CharField(max_length=400)
+    user=models.CharField(max_length=30, default='Deleted User')
     cost=models.IntegerField()
     pic=models.ImageField(upload_to='%Y/%m/%d')
     
