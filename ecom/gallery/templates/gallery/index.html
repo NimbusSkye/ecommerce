@@ -11,6 +11,9 @@ Buy shit here
 <a href={% url 'logout' %}>Sign out</a><br />
 <a href={% url 'gallery:view_cart' %}>Cart</a></h1>
 <h3>Signed in as {{ user.username }}</h3>
+{% if user.is_staff %}
+<a href="/admin/" target="_blank">Admin Page</a>
+{% endif %}
 </center>
 {% if item_list %}
 {% for item in item_list %}
@@ -20,6 +23,7 @@ Buy shit here
 	<li>Description: {{ item.desc }}</li>
 	<li>Seller: {{ item.user }}</li>
 	<li>Price: ${{ item.cost }}</li>
+	<li><a href={% url 'gallery:add_to_cart' item.id %}>Add to Cart</a></li>
 </ul>
 {% endfor %}
 {% else %}
