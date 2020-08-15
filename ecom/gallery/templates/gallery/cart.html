@@ -5,6 +5,7 @@
 {% block content %}
 {% if cart and items %}
 {% for item in items %}
+<h1>Your Cart</h1>
 <ul>
 <img src={{ item.pic.url }} height="200" width="250">
 <li>{{ item.name }}</li>
