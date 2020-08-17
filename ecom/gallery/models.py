@@ -7,10 +7,15 @@ from phonenumber_field.modelfields import PhoneNumberField
 class Item (models.Model):
     name=models.CharField(max_length=30)
     desc=models.CharField(max_length=400)
-    user=models.CharField(max_length=30, default='Deleted User')
+    user=models.ForeignKey(User, on_delete=models.CASCADE, related_name='items', null=True)
+    phone=PhoneNumberField(blank=True)
     cost=models.IntegerField()
     pic=models.ImageField(upload_to='%Y/%m/%d')
     
+    def findphone (self):
+        self.phone = Phone.objects.filter(user=self.user).get().number
+        self.save()
+        
     def __str__ (self):
         return f'{self.name}, {self.id}'
         
@@ -55,3 +60,6 @@ class Cart (models.Model):
 class Phone (models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='phone', null=True)
     number = PhoneNumberField()
+    
+    def __str__ (self):
+        return f"{self.user}'s phone, {self.number}"
