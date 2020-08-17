@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib.auth.models import User
+from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
 
@@ -51,3 +51,7 @@ class Cart (models.Model):
                 str=self.user.username
                 return str + f"'s empty cart, id {self.id}"  
             return f"Deleted User's empty cart, id {self.id}"
+            
+class Phone (models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='phone', null=True)
+    number = PhoneNumberField()
