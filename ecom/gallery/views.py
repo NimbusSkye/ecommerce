@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from gallery.models import Item, Cart
-from gallery.forms import ItemForm
+from .models import Item, Cart, Phone
+from .forms import ItemForm, PhoneForm
 from django.contrib.auth.models import User
 
 # Create your views here.
@@ -12,14 +12,28 @@ def index(request):
     return render(request, 'gallery/index.html', context)
 
 def upload(request):
+    phone = Phone.objects.filter(user=request.user)
+    form = ItemForm()
+    form2 = None
+    if not phone:
+        form2 = PhoneForm()
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
+        if not phone:
+            form2 = PhoneForm(request.POST)
+            if form2.is_valid():
+                p = Phone(number=form2.cleaned_data['number'])
+                p.save()
+                request.user.phone.add(p)
+            else:
+                form = ItemForm()
+                form2 = PhoneForm()
+                return render(request, 'gallery/upload.html', {'form': form, 'form2': form2})
         if form.is_valid():
             item = Item(name=form.cleaned_data['name'], desc=form.cleaned_data['desc'], user=request.user.username, cost=form.cleaned_data['price'], pic=request.FILES['pic'])
             item.save()
             return HttpResponseRedirect('/gallery/')
-    form = ItemForm()
-    return render(request, 'gallery/upload.html', {'form': form})
+    return render(request, 'gallery/upload.html', {'form': form, 'form2': form2})
     
 def detail (request, id):
     try:
