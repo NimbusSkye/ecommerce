@@ -11,12 +11,15 @@ def index(request):
     context={'item_list': item_list}
     return render(request, 'gallery/index.html', context)
 
-def upload(request):
-    phone = Phone.objects.filter(user=request.user)
+def blank_upload_form (request, phone):
     form = ItemForm()
     form2 = None
     if not phone:
         form2 = PhoneForm()
+    return render(request, 'gallery/upload.html', {'form': form, 'form2': form2})
+    
+def upload(request):
+    phone = Phone.objects.filter(user=request.user)
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
         if not phone:
@@ -26,14 +29,14 @@ def upload(request):
                 p.save()
                 request.user.phone.add(p)
             else:
-                form = ItemForm()
-                form2 = PhoneForm()
-                return render(request, 'gallery/upload.html', {'form': form, 'form2': form2})
+                return blank_upload_form(request, phone)
         if form.is_valid():
-            item = Item(name=form.cleaned_data['name'], desc=form.cleaned_data['desc'], user=request.user.username, cost=form.cleaned_data['price'], pic=request.FILES['pic'])
+            item = Item(name=form.cleaned_data['name'], desc=form.cleaned_data['desc'], cost=form.cleaned_data['price'], pic=request.FILES['pic'])
             item.save()
+            request.user.items.add(item)
+            item.findphone()
             return HttpResponseRedirect('/gallery/')
-    return render(request, 'gallery/upload.html', {'form': form, 'form2': form2})
+    return blank_upload_form(request, phone)
     
 def detail (request, id):
     try:
