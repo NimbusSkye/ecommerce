@@ -57,6 +57,7 @@ def detail (request, id):
         item = Item.objects.get(id=id)
     except Item.DoesNotExist:
         item = None
+    own_item = False
     if item:
         own_item = request.user == item.user
     return render(request, 'gallery/detail.html', {'item': item, 'own_item': own_item})
@@ -76,7 +77,11 @@ def cartExists (request):
     return False
 
 def add_to_cart (request, id):
-    if not request.user.is_authenticated:
+    try:
+        item=Item.objects.get(id=id)
+    except Item.DoesNotExist:
+        return HttpResponseRedirect('/gallery/')
+    if not request.user.is_authenticated or request.user == item.user:
         return HttpResponseRedirect('/gallery/')
     if not cartExists(request):
         c = Cart()
