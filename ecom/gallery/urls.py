@@ -11,5 +11,6 @@ urlpatterns=[
     path('cart/', views.view_cart, name='view_cart'),
     path('clear/', views.clear_cart, name='clear_cart'),
     path('checkout/', views.checkout, name='checkout'),
-    
+    path('sellerlist/', views.sellerList, name='sellerList'),
+    path('<int:id>/delete/', views.delete_listing, name='delete_listing'),
 ]
