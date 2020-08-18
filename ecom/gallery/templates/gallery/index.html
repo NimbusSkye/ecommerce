@@ -5,14 +5,15 @@ Buy shit here
 
 {% block content %}
 <center>
-<h1>Buy shit here
-<br />
+<h1>Buy shit here</h1>
+<h3>
 <a href={% url 'gallery:upload' %}>Sell an Item</a><br />
 <a href={% url 'logout' %}>Sign out</a><br />
-<a href={% url 'gallery:view_cart' %}>Cart</a></h1>
+<a href={% url 'gallery:view_cart' %}>Cart</a><br>
+<a href={% url 'gallery:sellerList' %}>Your Listings</a></h3>
 <h3>Signed in as {{ user.username }}</h3>
 {% if user.is_staff %}
-<a href="/admin/" target="_blank">Admin Page</a>
+<p><a href="/admin/" target="_blank">Admin Page</a></p>
 {% endif %}
 </center>
 {% if item_list %}

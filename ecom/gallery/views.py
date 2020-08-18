@@ -7,9 +7,13 @@ from django.contrib.auth.models import User
 # Create your views here.
 
 def index(request):
-    item_list=Item.objects.order_by('name')
-    context={'item_list': item_list}
-    return render(request, 'gallery/index.html', context)
+    item_list=None
+    if request.user.is_authenticated:
+        items=Item.objects.all()
+        own_items=Item.objects.filter(user=request.user)
+        list=items.difference(own_items)
+        item_list=list.order_by('name')
+    return render(request, 'gallery/index.html', {'item_list': item_list})
 
 def blank_upload_form (request, phone):
     form = ItemForm()
@@ -19,6 +23,8 @@ def blank_upload_form (request, phone):
     return render(request, 'gallery/upload.html', {'form': form, 'form2': form2})
     
 def upload(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/gallery/')
     phone = Phone.objects.filter(user=request.user)
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
@@ -38,12 +44,31 @@ def upload(request):
             return HttpResponseRedirect('/gallery/')
     return blank_upload_form(request, phone)
     
+def sellerList (request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/gallery/')
+    list = Item.objects.filter(user=request.user)
+    return render(request, 'gallery/sellerlist.html', {'list': list})
+    
 def detail (request, id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/gallery/')
     try:
         item = Item.objects.get(id=id)
     except Item.DoesNotExist:
         item = None
-    return render(request, 'gallery/detail.html', {'item': item})
+    if item:
+        own_item = request.user == item.user
+    return render(request, 'gallery/detail.html', {'item': item, 'own_item': own_item})
+    
+def delete_listing (request, id):
+    try:
+        item = Item.objects.get(id=id)
+    except Item.DoesNotExist:
+        item = None
+    if item and request.user == item.user:
+        item.delete()
+    return HttpResponseRedirect('/gallery/sellerlist/')
     
 def cartExists (request):
     if request.user.is_authenticated and Cart.objects.filter(user=request.user):
@@ -63,6 +88,8 @@ def add_to_cart (request, id):
     return HttpResponseRedirect('/gallery/cart/')
     
 def view_cart (request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/gallery/')
     if cartExists(request):
         c = Cart.objects.filter(user=request.user)
         cart = c.get()

@@ -17,7 +17,11 @@ Viewing {{ item.name }}
 </ul>
 <h2>Price: ${{ item.cost }}</h2>
 <br>
+{% if own_item %}
+<a href={% url 'gallery:delete_listing' item.id %}>Unlist Item</a>
+{% else %}
 <a href={% url 'gallery:add_to_cart' item.id %}>Add to Cart</a>
+{% endif %}
 {% else %}
 <h1>Error: Nonexistent item</h1>
 {% endif %}

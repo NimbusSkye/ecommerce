@@ -1,0 +1,17 @@
+{% extends 'gallery/base.html' %}
+
+{% block title %}
+Your Current Listings
+{% endblock %}
+
+{% block content %}
+<h1>Your Current Listings</h1>
+{% for item in list %}
+<h3>{{ item.name }}</h3>
+<img src={{ item.pic.url }} height="200" width="250">
+<p>Description: {{ item.desc }}</p>
+<p>Price: ${{ item.cost }}</p>
+<h4><a href={% url 'gallery:delete_listing' item.id %}>Remove Listing</a></h4>
+{% endfor %}
+<p><a href='/gallery/'>Back to Gallery</a></p>
+{% endblock %}
