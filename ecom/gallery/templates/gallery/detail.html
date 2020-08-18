@@ -8,10 +8,20 @@ Viewing {{ item.name }}
 <h1>{{ item.name }}</h1>
 <img src={{ item.pic.url }} height="400" width="600">
 <p>{{ item.desc }}</p>
-<p>Seller: {{ item.user }}</p>
+<p>Seller Information:</p>
+<ul>
+<li>Username: {{ item.user }}</li>
+<li>Full Name: {{ item.user.first_name }} {{ item.user.last_name }}</li> 
+<li>Phone Number: {{ item.phone }}</li>
+<li>Email Address: {{ item.user.email }}</li>
+</ul>
 <h2>Price: ${{ item.cost }}</h2>
 <br>
+{% if own_item %}
+<a href={% url 'gallery:delete_listing' item.id %}>Unlist Item</a>
+{% else %}
 <a href={% url 'gallery:add_to_cart' item.id %}>Add to Cart</a>
+{% endif %}
 {% else %}
 <h1>Error: Nonexistent item</h1>
 {% endif %}
