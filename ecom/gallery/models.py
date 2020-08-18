@@ -8,7 +8,7 @@ class Item (models.Model):
     name=models.CharField(max_length=30)
     desc=models.CharField(max_length=400)
     user=models.ForeignKey(User, on_delete=models.CASCADE, related_name='items', null=True)
-    phone=PhoneNumberField(blank=True)
+    phone=PhoneNumberField(null=True)
     cost=models.IntegerField()
     pic=models.ImageField(upload_to='%Y/%m/%d')
     
@@ -30,10 +30,14 @@ class Cart (models.Model):
         self.save()
     
     def removeItem (self, id):
-        item = Item.objects.get(id=id)
-        self.totalprice -= item.cost
-        self.save()
-        self.items.remove(item)
+        try:
+            item = Item.objects.get(id=id)
+        except Item.DoesNotExist:
+            item=None
+        if item and item in self.items.all():
+            self.totalprice -= item.cost
+            self.save()
+            self.items.remove(item)
         
     def checkout (self):
         for item in self.items.all():
