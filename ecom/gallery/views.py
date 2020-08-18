@@ -1,32 +1,75 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from gallery.models import Item, Cart
-from gallery.forms import ItemForm
+from .models import Item, Cart, Phone
+from .forms import ItemForm, PhoneForm
 from django.contrib.auth.models import User
 
 # Create your views here.
 
 def index(request):
-    item_list=Item.objects.order_by('name')
-    context={'item_list': item_list}
-    return render(request, 'gallery/index.html', context)
+    item_list=None
+    if request.user.is_authenticated:
+        items=Item.objects.all()
+        own_items=Item.objects.filter(user=request.user)
+        list=items.difference(own_items)
+        item_list=list.order_by('name')
+    return render(request, 'gallery/index.html', {'item_list': item_list})
 
+def blank_upload_form (request, phone):
+    form = ItemForm()
+    form2 = None
+    if not phone:
+        form2 = PhoneForm()
+    return render(request, 'gallery/upload.html', {'form': form, 'form2': form2})
+    
 def upload(request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/gallery/')
+    phone = Phone.objects.filter(user=request.user)
     if request.method == 'POST':
         form = ItemForm(request.POST, request.FILES)
+        if not phone:
+            form2 = PhoneForm(request.POST)
+            if form2.is_valid():
+                p = Phone(number=form2.cleaned_data['number'])
+                p.save()
+                request.user.phone.add(p)
+            else:
+                return blank_upload_form(request, phone)
         if form.is_valid():
-            item = Item(name=form.cleaned_data['name'], desc=form.cleaned_data['desc'], user=request.user.username, cost=form.cleaned_data['price'], pic=request.FILES['pic'])
+            item = Item(name=form.cleaned_data['name'], desc=form.cleaned_data['desc'], cost=form.cleaned_data['price'], pic=request.FILES['pic'])
             item.save()
+            request.user.items.add(item)
+            item.findphone()
             return HttpResponseRedirect('/gallery/')
-    form = ItemForm()
-    return render(request, 'gallery/upload.html', {'form': form})
+    return blank_upload_form(request, phone)
+    
+def sellerList (request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/gallery/')
+    list = Item.objects.filter(user=request.user)
+    return render(request, 'gallery/sellerlist.html', {'list': list})
     
 def detail (request, id):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/gallery/')
     try:
         item = Item.objects.get(id=id)
     except Item.DoesNotExist:
         item = None
-    return render(request, 'gallery/detail.html', {'item': item})
+    own_item = False
+    if item:
+        own_item = request.user == item.user
+    return render(request, 'gallery/detail.html', {'item': item, 'own_item': own_item})
+    
+def delete_listing (request, id):
+    try:
+        item = Item.objects.get(id=id)
+    except Item.DoesNotExist:
+        item = None
+    if item and request.user == item.user:
+        item.delete()
+    return HttpResponseRedirect('/gallery/sellerlist/')
     
 def cartExists (request):
     if request.user.is_authenticated and Cart.objects.filter(user=request.user):
@@ -34,7 +77,11 @@ def cartExists (request):
     return False
 
 def add_to_cart (request, id):
-    if not request.user.is_authenticated:
+    try:
+        item=Item.objects.get(id=id)
+    except Item.DoesNotExist:
+        return HttpResponseRedirect('/gallery/')
+    if not request.user.is_authenticated or request.user == item.user:
         return HttpResponseRedirect('/gallery/')
     if not cartExists(request):
         c = Cart()
@@ -46,6 +93,8 @@ def add_to_cart (request, id):
     return HttpResponseRedirect('/gallery/cart/')
     
 def view_cart (request):
+    if not request.user.is_authenticated:
+        return HttpResponseRedirect('/gallery/')
     if cartExists(request):
         c = Cart.objects.filter(user=request.user)
         cart = c.get()
