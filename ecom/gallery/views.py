@@ -9,7 +9,13 @@ from django.views.generic import ListView
 
 class SearchResultsView(ListView):
     model = Item
-    template_name = 'search_results.html'
+    template_name = 'gallery/search_results.html'
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        if query:
+            object_list = Item.objects.filter(name__icontains=query)
+            return object_list
+        return None
 
 def index(request):
     item_list=None
