@@ -3,8 +3,13 @@ from django.http import HttpResponseRedirect
 from .models import Item, Cart, Phone
 from .forms import ItemForm, PhoneForm
 from django.contrib.auth.models import User
+from django.views.generic import ListView
 
 # Create your views here.
+
+class SearchResultsView(ListView):
+    model = Item
+    template_name = 'search_results.html'
 
 def index(request):
     item_list=None
