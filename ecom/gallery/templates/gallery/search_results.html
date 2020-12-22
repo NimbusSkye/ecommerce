@@ -1,0 +1,16 @@
+{% extends 'gallery/base.html' %}
+{% block title %}
+Search Results
+{% endblock %}
+
+{% block content %}
+<h1>Search Results</h1>
+<ul>
+  {% for item in object_list %}
+    <li>
+      <a href={% url 'gallery:index' %}{{ item.id }}>{{ item.name }}</a>
+    </li>
+  {% endfor %}
+</ul>
+<a href={% url 'gallery:index' %}>Back to Gallery</a>
+{% endblock %}
