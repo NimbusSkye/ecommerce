@@ -18,12 +18,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from register import views as v
+from django.shortcuts import redirect
 
 urlpatterns = [
     path('gallery/', include('gallery.urls')),
     path('admin/', admin.site.urls),
     path('register/', v.register, name='register'),
     path('', include("django.contrib.auth.urls")),
+    path('', lambda req: redirect('/gallery/')),
 ]
 
 if settings.DEBUG:
