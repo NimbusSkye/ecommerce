@@ -13,5 +13,4 @@ Your Current Listings
 <p>Price: ${{ item.cost }}</p>
 <h4><a href={% url 'gallery:delete_listing' item.id %}>Remove Listing</a></h4>
 {% endfor %}
-<p><a href={% url 'gallery:index' %}>Back to Gallery</a></p>
 {% endblock %}
