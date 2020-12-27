@@ -16,15 +16,20 @@ Online Shop
 {% endif %}
 </center>
 {% if item_list %}
-{% for item in item_list %}
+<div class="letterlist">
 <ul>
-	<li><img src={{ item.pic.url }} height="200" width="300"></li>
-    <li>Name: <a href={{ item.id }}>{{ item.name }}</a></li>
-	<li>Description: {{ item.desc }}</li>
-	<li>Price: ${{ item.cost }}</li>
-	<li><a href={% url 'gallery:add_to_cart' item.id %}>Add to Cart</a></li>
-</ul>
+{% for item in item_list %}
+	<li><img src={{ item.pic.url }} height="200" width="300">
+	<br>
+	Name: <a href={{ item.id }}>{{ item.name }}</a>
+	<br>
+	Price: ${{ item.cost }}
+	<br>
+	<a href={% url 'gallery:add_to_cart' item.id %}>Add to Cart</a>
+	</li>
 {% endfor %}
+</ul>
+</div>
 {% else %}
 <p>No Items</p>
 {% endif %}
