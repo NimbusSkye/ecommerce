@@ -9,11 +9,6 @@ Online Shop
 <form action="{% url 'gallery:search_results' %}" method="get">
   <input name="q" type="text" placeholder="Search...">
 </form>
-<h3>
-<a href={% url 'gallery:upload' %}>Sell an Item</a><br />
-<a href={% url 'logout' %}>Sign out</a><br />
-<a href={% url 'gallery:view_cart' %}>Cart</a><br>
-<a href={% url 'gallery:sellerList' %}>Your Listings</a></h3>
 <h3>Signed in as {{ user.username }}</h3>
 <p>Check out the <a href="https://github.com/nimbusskye/ecommerce" target="_blank">GitHub Page</a></p>
 {% if user.is_staff %}
