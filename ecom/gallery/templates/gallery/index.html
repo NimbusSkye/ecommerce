@@ -1,6 +1,6 @@
 {% extends 'gallery/base.html' %}
 {% block title %}
-Buy shit here
+Online Shop
 {% endblock %}
 
 {% block content %}
@@ -15,6 +15,7 @@ Buy shit here
 <a href={% url 'gallery:view_cart' %}>Cart</a><br>
 <a href={% url 'gallery:sellerList' %}>Your Listings</a></h3>
 <h3>Signed in as {{ user.username }}</h3>
+<p>Check out the <a href="https://github.com/nimbusskye/ecommerce" target="_blank">GitHub Page</a></p>
 {% if user.is_staff %}
 <p><a href="/admin/" target="_blank">Admin Page</a></p>
 {% endif %}
