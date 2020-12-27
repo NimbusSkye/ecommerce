@@ -42,13 +42,15 @@
 </style>
 <title>{% block title %}{% endblock %}</title>
 </head>
-<body bgcolor="black">
+<body bgcolor="gray">
 {% if user.is_authenticated %}
 	<div class="bar">
 	<ul>
+	<li><a href={% url 'gallery:index' %}>Home</a></li>
 	<li><a href={% url 'gallery:view_cart' %}>Cart</a></li>
 	<li><a href={% url 'gallery:upload' %}>Sell an Item</a></li>
 	<li><a href={% url 'gallery:sellerList' %}>Your Listings</a></li>
+	<li><a href={% url 'gallery:chat' %}>Live Chat</a></li>
 	<li><a href={% url 'logout' %}>Sign out</a></li>
 	</ul>
 	</div>

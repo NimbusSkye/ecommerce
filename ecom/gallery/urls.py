@@ -13,5 +13,6 @@ urlpatterns=[
     path('checkout/', views.checkout, name='checkout'),
     path('sellerlist/', views.sellerList, name='sellerList'),
     path('<int:id>/delete/', views.delete_listing, name='delete_listing'),
-    path('search/', views.SearchResultsView.as_view(), name='search_results')
+    path('search/', views.SearchResultsView.as_view(), name='search_results'),
+    path('chat/', views.chat, name='chat')
 ]

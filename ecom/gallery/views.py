@@ -16,6 +16,9 @@ class SearchResultsView(ListView):
             object_list = Item.objects.filter(name__icontains=query)
             return object_list
         return None
+        
+def chat(request):
+    return render(request, 'gallery/chat.html', None)
 
 def index(request):
     item_list=None
