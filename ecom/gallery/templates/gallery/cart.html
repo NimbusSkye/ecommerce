@@ -4,23 +4,31 @@
 
 {% block content %}
 {% if cart and items %}
-<h1>Your Cart</h1>
-{% for item in items %}
+<center>
+<h2>Your Cart
+<br>
+Total price: ${{ cart.totalprice }}
+<br>
+<a href={% url 'gallery:checkout' %}>Checkout</a></h2>
+<h4><a href={% url 'gallery:clear_cart' %}>Clear all Items</a></h4>
+</center>
+<div class="letterlist">
 <ul>
-<img src={{ item.pic.url }} height="200" width="250">
-<li>{{ item.name }}</li>
-<li>{{ item.desc }}</li>
-<li>Seller: {{ item.user }}</li>
-<li>${{ item.cost }}</li>
-<li><a href={% url 'gallery:remove_item' item.id %}>Remove Item</a></li>
-</ul>
+{% for item in items %}
+	<li><img src={{ item.pic.url }} height="200" width="300">
+	<br>
+	Name: {{ item.name }}
+	<br>
+	Price: ${{ item.cost }}
+	<br>
+	{{ item.desc }}
+	<br>
+	<a href={% url 'gallery:remove_item' item.id %}>Remove Item</a>
+	</li>
 {% endfor %}
-<a href={% url 'gallery:clear_cart' %}>Clear all Items</a>
-<h2>Total price: ${{ cart.totalprice }}</h2>
-<h1><a href={% url 'gallery:checkout' %}>Checkout</a></h1>
+</ul>
+</div>
 {% else %}
 <h1>No Items</h1>
 {% endif %}
-<p>
-</p>
 {% endblock %}

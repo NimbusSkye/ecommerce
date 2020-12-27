@@ -6,11 +6,20 @@ Your Current Listings
 
 {% block content %}
 <h1>Your Current Listings</h1>
+<div class="letterlist">
+<ul>
 {% for item in list %}
-<h3>{{ item.name }}</h3>
-<img src={{ item.pic.url }} height="200" width="250">
-<p>Description: {{ item.desc }}</p>
-<p>Price: ${{ item.cost }}</p>
-<h4><a href={% url 'gallery:delete_listing' item.id %}>Remove Listing</a></h4>
+	<li><img src={{ item.pic.url }} height="200" width="300">
+	<br>
+	Name: {{ item.name }}
+	<br>
+	Price: ${{ item.cost }}
+	<br>
+	{{ item.desc }}
+	<br>
+	<a href={% url 'gallery:delete_listing' item.id %}>Remove Listing</a>
+	</li>
 {% endfor %}
+</ul>
+</div>
 {% endblock %}
