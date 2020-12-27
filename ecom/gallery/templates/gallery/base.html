@@ -5,20 +5,60 @@
 .text {
 	color:white
 }
+.bar ul {
+	position:fixed;
+	top:0;
+	width:100%;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: #333;
+}
+
+.bar li {
+  float: left;
+}
+
+.bar li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.bar li a:hover {
+  background-color: #111;
+}
+
+.bar li a:hover:not(.active) {
+  background-color: #111;
+}
+
+.active {
+  background-color: #4CAF50;
+}
 </style>
-<title>{% block title %}Forbidden{% endblock %}</title>
+<title>{% block title %}{% endblock %}</title>
 </head>
 <body bgcolor="black">
 {% if user.is_authenticated %}
+	<ul class="bar">
+	<li><a href={% url 'gallery:upload' %}>Sell an Item</a></li>
+	<li><a href={% url 'logout' %}>Sign out</a></li>
+	<li><a href={% url 'gallery:view_cart' %}>Cart</a></li>
+	<li><a href={% url 'gallery:sellerList' %}>Your Listings</a></li>
+	</ul>
     <div class="text">
 	{% block content %}
 	{% endblock %}
     </div>
 	
 {% else %}
-<div class="text">
-<h1>You must <a href={% url 'login' %}>sign in</a> to perform this operation.</h1>
-</div>
+	<div class="text">
+	<h1>You must <a href={% url 'login' %}>sign in</a> to perform this operation.</h1>
+	</div>
 {% endif %}
 
 </body>
