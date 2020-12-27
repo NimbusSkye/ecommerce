@@ -16,7 +16,6 @@ Viewing {{ item.name }}
 <li>Email Address: {{ item.user.email }}</li>
 </ul>
 <h2>Price: ${{ item.cost }}</h2>
-<br>
 {% if own_item %}
 <a href={% url 'gallery:delete_listing' item.id %}>Unlist Item</a>
 {% else %}
@@ -25,7 +24,6 @@ Viewing {{ item.name }}
 {% else %}
 <h1>Error: Nonexistent item</h1>
 {% endif %}
-<br>
 <br>
 <a href={% url 'gallery:index' %}>Back to Gallery</a>
 {% endblock %}
