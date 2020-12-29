@@ -26,6 +26,10 @@ def index(request):
         items=Item.objects.all()
         own_items=Item.objects.filter(user=request.user)
         list=items.difference(own_items)
+        c=Cart.objects.filter(user=request.user)
+        if c:
+            cart=c.get()
+            list=list.difference(cart.items.all())
         item_list=list.order_by('name')
     return render(request, 'gallery/index.html', {'item_list': item_list})
 
