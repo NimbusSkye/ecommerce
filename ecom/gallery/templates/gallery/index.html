@@ -4,12 +4,13 @@ Online Shop
 {% endblock %}
 
 {% block content %}
+<br>
 <center>
 <h1>Online Shop</h1>
 <form action="{% url 'gallery:search_results' %}" method="get">
   <input name="q" type="text" placeholder="Search...">
 </form>
-<h3>Signed in as {{ user.username }}</h3>
+<p>Signed in as {{ user.username }}</p>
 <p>Check out the <a href="https://github.com/nimbusskye/ecommerce" target="_blank">GitHub Page</a></p>
 {% if user.is_staff %}
 <p><a href="/admin/" target="_blank">Admin Page</a></p>
