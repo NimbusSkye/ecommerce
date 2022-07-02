@@ -31,6 +31,8 @@ def index(request):
             cart=c.get()
             list=list.difference(cart.items.all())
         item_list=list.order_by('name')
+    else:
+        item_list = Item.objects.all()
     return render(request, 'gallery/index.html', {'item_list': item_list})
 
 def blank_upload_form (request, phone):
@@ -69,8 +71,8 @@ def sellerList (request):
     return render(request, 'gallery/sellerlist.html', {'list': list})
     
 def detail (request, id):
-    if not request.user.is_authenticated:
-        return HttpResponseRedirect('/gallery/')
+    # if not request.user.is_authenticated:
+    #     return HttpResponseRedirect('/gallery/')
     try:
         item = Item.objects.get(id=id)
     except Item.DoesNotExist:
