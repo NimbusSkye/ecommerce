@@ -82,8 +82,11 @@ body {
 <li><a href={% url 'gallery:upload' %}>Sell an Item</a></li>
 <li><a href={% url 'gallery:sellerList' %}>Your Listings</a></li>
 <li><a href={% url 'gallery:chat' %}>Live Chat</a></li>
-<li><a href={% url 'login' %}>Sign in</a></li>
+{% if user.is_authenticated %}
 <li><a href={% url 'logout' %}>Sign out</a></li>
+{% else %}
+<li><a href={% url 'login' %}>Sign in</a></li>
+{% endif %}
 </ul>
 </div>
 <br>
