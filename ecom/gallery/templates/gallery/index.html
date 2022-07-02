@@ -9,11 +9,12 @@ Online Shop
 <h1>Online Shop</h1>
 <form action="{% url 'gallery:search_results' %}" method="get">
   <input name="q" type="text" placeholder="Search...">
+  <input class="submit" type="submit" value="Search">
 </form>
 {% if user.is_authenticated %}
 <p>Signed in as {{ user.username }}</p>
 {% else %}
-<p>Not signed in</p>
+<p>You may view items, but please <a href={% url 'login' %}>sign in</a> to buy or sell.</p>
 {% endif %}
 <p>Check out the <a href="https://github.com/nimbusskye/ecommerce" target="_blank">GitHub Page</a></p>
 {% if user.is_staff %}
